@@ -23,7 +23,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -36,14 +37,16 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
       "name": "buyEnergy",
       "outputs": [],
       "stateMutability": "payable",
-      "type": "function"
+      "type": "function",
+      "payable": true
     },
     {
       "inputs": [
@@ -75,7 +78,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.0+commit.c7dfd78e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"buyEnergy\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"energyBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"getEnergyBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"sellEnergy\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/SimpleEnergyMarket.sol\":\"SimpleEnergyMarket\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/SimpleEnergyMarket.sol\":{\"keccak256\":\"0x6c8ed4e260e03a89d95704f21060c4bdd686c25ab6d8398349289298c093a4f4\",\"urls\":[\"bzz-raw://df38ca3f7781576fe5436cfd15f5eee514383f2e237c1f1429d3a670df67d739\",\"dweb:/ipfs/QmbjZ9oEzvfEPVTzbQf86vX6wrufakcVyBT56HMkwhQSaX\"]}},\"version\":1}",
@@ -3495,8 +3499,8 @@
     "1337": {
       "events": {},
       "links": {},
-      "address": "0x9f3621B9FbC228EC7e56cE1922B4ebA9EC63836e",
-      "transactionHash": "0xa7d219f0cd2772e602bb71dcd6236d2bb9587c11b63d43fb33fa014162a4cd4c"
+      "address": "0x900b9a5854FA8308e8aCe139C87353A343689882",
+      "transactionHash": "0x532bfc3d175cd8f84606ea0fd02cfdaea829323bcb03d65500b15607b8455b0a"
     },
     "5777": {
       "events": {},
@@ -3506,7 +3510,8 @@
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-11-19T09:43:14.307Z",
+  "updatedAt": "2024-11-21T19:17:05.609Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {},
