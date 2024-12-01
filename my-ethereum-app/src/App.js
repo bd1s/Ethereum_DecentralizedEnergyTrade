@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Web3 from 'web3';
-import SimpleEnergyMarket from './abi/SimpleEnergyMarket.json'; // L'ABI générée après compilation
+import SimpleEnergyMarket from './abi/SimpleEnergyMarket.json';
 import EnergyMarket from './components/EnergyMarket';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -23,14 +23,17 @@ const App = () => {
         const networkId = await web3Instance.eth.net.getId();
         console.log("Network ID: ", Number(networkId)); // Assurez-vous que l'ID est un nombre entier
 
-        const contractAddress = '0x900b9a5854FA8308e8aCe139C87353A343689882';
+        const contractAddress = '0xfded03f2c0EF66e89aB50108301059Be0fD767E3';
         const contractInstance = new web3Instance.eth.Contract(
           SimpleEnergyMarket.abi,
           contractAddress
         );
+        console.log("Contract methods: ", contractInstance.methods); // Vérifiez que getRole et setRole sont là
+
 
         console.log("Contract ABI: ", SimpleEnergyMarket.abi);  // Vérifiez que l'ABI est correcte
         console.log("Contract Address: ", contractAddress);  // Vérifiez l'adresse du contrat
+        console.log("Contract methods: ", contractInstance.methods);
 
         setContract(contractInstance);
       } catch (error) {
@@ -64,3 +67,25 @@ const App = () => {
 };
 
 export default App;
+
+
+
+// import React from 'react';
+// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// import Navbar from './components/Navbar';
+// import ProducerDashboard from './components/ProducerDashboard';
+// import ConsumerDashboard from './components/ConsumerDashboard';
+
+// const App = ({ web3, contract, account }) => {
+//   return (
+//     <Router>
+//       <Navbar />
+//       <Routes>
+//         <Route path="/producer" element={<ProducerDashboard contract={contract} account={account} web3={web3} />} />
+//         <Route path="/consumer" element={<ConsumerDashboard contract={contract} account={account} web3={web3} />} />
+//       </Routes>
+//     </Router>
+//   );
+// };
+
+// export default App;

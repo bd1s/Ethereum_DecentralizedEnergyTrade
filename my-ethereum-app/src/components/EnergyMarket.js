@@ -1,74 +1,74 @@
-// // src/components/EnergyMarket.js
+// // // src/components/EnergyMarket.js
 // import React, { useState, useEffect } from 'react';
-// import { SimpleEnergyMarketABI } from '../abi/SimpleEnergyMarket.json';
 
 // const EnergyMarket = ({ web3, account, contract }) => {
 //   const [energyBalance, setEnergyBalance] = useState(0);
 //   const [amountToSell, setAmountToSell] = useState(0);
+  
+//   // Fonction pour récupérer le solde d'énergie de l'utilisateur
+//   const fetchEnergyBalance = async () => {
+//     try {
+//       const balance = await contract.methods.getEnergyBalance(account).call();
+//       console.log("Balance récupérée: ", balance); // Log pour vérifier
+//       setEnergyBalance(web3.utils.fromWei(balance, 'ether')); // Convertir en ETH
+//     } catch (error) {
+//       console.error('Erreur lors de la récupération du solde d\'énergie', error);
+//     }
+//   };
 
+//   // Appeler fetchEnergyBalance chaque fois que le contrat ou le compte change
 //   useEffect(() => {
 //     if (contract && account) {
-//       // Obtenir le solde d'énergie de l'utilisateur
-//       const fetchEnergyBalance = async () => {
-//         const balance = await contract.methods.getEnergyBalance(account).call();
-//         setEnergyBalance(web3.utils.fromWei(balance, 'ether'));
-//       };
-
 //       fetchEnergyBalance();
 //     }
 //   }, [contract, account, web3]);
 
+//   // Fonction pour acheter de l'énergie
 //   const buyEnergy = async () => {
-//     if (contract && web3) {
-//       try {
-//         await contract.methods.buyEnergy().send({
-//           from: account,
-//           value: web3.utils.toWei('0.1', 'ether'), // Montant en ETH pour acheter de l'énergie
-//         });
-//         alert('Énergie achetée avec succès!');
-//         // Mettre à jour le solde après l'achat
-//         const newBalance = await contract.methods.getEnergyBalance(account).call();
-//         setEnergyBalance(web3.utils.fromWei(newBalance, 'ether'));
-//       } catch (error) {
-//         console.error('Erreur lors de l\'achat d\'énergie', error);
-//       }
+//     try {
+//       await contract.methods.buyEnergy().send({
+//         from: account,
+//         value: web3.utils.toWei('0.1', 'ether'), // Montant en ETH
+//       });
+//       alert('Énergie achetée avec succès!');
+//       fetchEnergyBalance(); // Mettre à jour le solde après l'achat
+//     } catch (error) {
+//       console.error('Erreur lors de l\'achat d\'énergie', error);
 //     }
 //   };
 
+//   // Fonction pour vendre de l'énergie
 //   const sellEnergy = async () => {
-//     if (contract && web3 && amountToSell > 0) {
+//     if (amountToSell > 0 && amountToSell <= energyBalance) {
 //       try {
 //         await contract.methods.sellEnergy(web3.utils.toWei(amountToSell.toString(), 'ether')).send({
 //           from: account,
 //         });
 //         alert('Énergie vendue avec succès!');
-//         // Mettre à jour le solde après la vente
-//         const newBalance = await contract.methods.getEnergyBalance(account).call();
-//         setEnergyBalance(web3.utils.fromWei(newBalance, 'ether'));
+//         fetchEnergyBalance(); // Mettre à jour le solde après la vente
 //       } catch (error) {
 //         console.error('Erreur lors de la vente d\'énergie', error);
+//         alert('Erreur lors de la vente d\'énergie. Vérifiez la console pour plus de détails.');
 //       }
 //     } else {
-//       alert('Veuillez entrer un montant valide pour vendre.');
+//       alert('Veuillez entrer un montant valide pour vendre (moins que votre solde d\'énergie).');
 //     }
 //   };
+  
 
 //   return (
 //     <div>
-//       <h2>Marché de l'énergie</h2>
+//       <h3>Marché de l'énergie</h3>
 //       <p>Solde d'énergie: {energyBalance} ETH</p>
-
 //       <button onClick={buyEnergy}>Acheter de l'énergie (0.1 ETH)</button>
-      
 //       <div>
-//         <h3>Vendre de l'énergie</h3>
 //         <input
 //           type="number"
 //           value={amountToSell}
 //           onChange={(e) => setAmountToSell(e.target.value)}
-//           placeholder="Montant en ETH"
+//           placeholder="Montant à vendre"
 //         />
-//         <button onClick={sellEnergy}>Vendre</button>
+//         <button onClick={sellEnergy}>Vendre de l'énergie</button>
 //       </div>
 //     </div>
 //   );
@@ -82,58 +82,107 @@ import React, { useState, useEffect } from 'react';
 const EnergyMarket = ({ web3, account, contract }) => {
   const [energyBalance, setEnergyBalance] = useState(0);
   const [amountToSell, setAmountToSell] = useState(0);
+  const [role, setRole] = useState('');
 
-  useEffect(() => {
-    const fetchEnergyBalance = async () => {
+  // Fonction pour récupérer le solde d'énergie de l'utilisateur
+  const fetchEnergyBalance = async () => {
+    try {
       const balance = await contract.methods.getEnergyBalance(account).call();
-      setEnergyBalance(web3.utils.fromWei(balance, 'ether'));
-    };
-
-    if (contract && account) {
-      fetchEnergyBalance();
-    }
-  }, [contract, account, web3]);
-
-  const buyEnergy = async () => {
-    if (contract && web3) {
-      await contract.methods.buyEnergy().send({
-        from: account,
-        value: web3.utils.toWei('0.1', 'ether'),
-      });
-      alert('Énergie achetée avec succès !');
-      const newBalance = await contract.methods.getEnergyBalance(account).call();
-      setEnergyBalance(web3.utils.fromWei(newBalance, 'ether'));
+      setEnergyBalance(web3.utils.fromWei(balance, 'ether')); // Convertir en ETH
+    } catch (error) {
+      console.error('Erreur lors de la récupération du solde d\'énergie', error);
     }
   };
 
-  const sellEnergy = async () => {
-    if (contract && web3 && amountToSell > 0) {
-      await contract.methods.sellEnergy(web3.utils.toWei(amountToSell.toString(), 'ether')).send({
+  const fetchRole = async () => {
+    try {
+      const userRole = await contract.methods.getRole(account).call();
+      setRole(userRole);
+    } catch (error) {
+      console.error('Erreur lors de la récupération du rôle', error);
+    }
+  };
+  
+  const setUserRole = async (role) => {
+    try {
+      await contract.methods.setRole(role).send({ from: account });
+      alert(`Rôle défini avec succès: ${role}`);
+      fetchRole(); // Rafraîchir le rôle après la mise à jour
+    } catch (error) {
+      console.error('Erreur lors de la définition du rôle', error);
+    }
+  };
+  
+
+  useEffect(() => {
+    if (contract && account) {
+      fetchEnergyBalance();
+      fetchRole();  // Récupérer le rôle de l'utilisateur
+    }
+  }, [contract, account, web3]);
+
+  // Fonction pour acheter de l'énergie
+  const buyEnergy = async () => {
+    try {
+      await contract.methods.buyEnergy().send({
         from: account,
+        value: web3.utils.toWei('0.1', 'ether'), // Montant en ETH
       });
-      alert('Énergie vendue avec succès !');
-      const newBalance = await contract.methods.getEnergyBalance(account).call();
-      setEnergyBalance(web3.utils.fromWei(newBalance, 'ether'));
+      alert('Énergie achetée avec succès!');
+      fetchEnergyBalance(); // Mettre à jour le solde après l'achat
+    } catch (error) {
+      console.error('Erreur lors de l\'achat d\'énergie', error);
+    }
+  };
+
+  // Fonction pour vendre de l'énergie
+  const sellEnergy = async () => {
+    if (amountToSell > 0 && amountToSell <= energyBalance) {
+      try {
+        await contract.methods.sellEnergy(web3.utils.toWei(amountToSell.toString(), 'ether')).send({
+          from: account,
+        });
+        alert('Énergie vendue avec succès!');
+        fetchEnergyBalance(); // Mettre à jour le solde après la vente
+      } catch (error) {
+        console.error('Erreur lors de la vente d\'énergie', error);
+      }
     } else {
       alert('Veuillez entrer un montant valide pour vendre.');
     }
   };
 
+ 
+
   return (
     <div>
-      <h2>Marché de l'énergie</h2>
+      <h3>Marché de l'énergie</h3>
       <p>Solde d'énergie: {energyBalance} ETH</p>
-      <button onClick={buyEnergy}>Acheter de l'énergie (0.1 ETH)</button>
+
+      {/* Choisir le rôle */}
       <div>
-        <h3>Vendre de l'énergie</h3>
-        <input
-          type="number"
-          value={amountToSell}
-          onChange={(e) => setAmountToSell(e.target.value)}
-          placeholder="Montant en ETH"
-        />
-        <button onClick={sellEnergy}>Vendre</button>
+        <h4>Choisir votre rôle :</h4>
+        <button onClick={() => setUserRole('Acheteur')}>Acheteur</button>
+        <button onClick={() => setUserRole('Vendeur')}>Vendeur</button>
       </div>
+
+      {/* Afficher l'action disponible en fonction du rôle */}
+      {role === 'Acheteur' && (
+        <div>
+          <button onClick={buyEnergy}>Acheter de l'énergie (0.1 ETH)</button>
+        </div>
+      )}
+      {role === 'Vendeur' && (
+        <div>
+          <input
+            type="number"
+            value={amountToSell}
+            onChange={(e) => setAmountToSell(e.target.value)}
+            placeholder="Montant à vendre"
+          />
+          <button onClick={sellEnergy}>Vendre de l'énergie</button>
+        </div>
+      )}
     </div>
   );
 };

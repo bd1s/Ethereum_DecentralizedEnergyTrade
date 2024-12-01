@@ -35,12 +35,29 @@
         "payable": false,
         "stateMutability": "view",
         "type": "function"
+      },
+      {
+        "name": "setRole",
+        "type": "function",
+        "inputs": [{ "name": "role", "type": "string" }],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "name": "getRole",
+        "type": "function",
+        "inputs": [{ "name": "account", "type": "address" }],
+        "outputs": [{ "name": "", "type": "string" }],
+        "stateMutability": "view"
       }
+      
     ],
+    
     "networks": {
       "1337": {
-        "address": "0x900b9a5854FA8308e8aCe139C87353A343689882"
+        "address": "0xfded03f2c0EF66e89aB50108301059Be0fD767E3"
       }
     }
+    
   }
   
